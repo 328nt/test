@@ -1,0 +1,57 @@
+Easy mà !!!
+
+//logout
+	Auth::logout();
+	return redirect(....);
+//LOGIN
+1/ 
+use Illuminate\Support\Facades\Auth;
+
+public function postloginadmin(Request $request)
+{
+	validate...
+	;
+	if(Auth::attempt (['column_user'=> $request->user, 'password_column=> $request->password']))
+	{
+	return redirect('....');		(**)
+	}
+	else
+	{
+	return redirect('...')';
+	}
+}
+
+2/ shareview
+go view, in form use @if(Auth::check())
+and {{ Auth::user()->name }} get name
+
+
+3/ check middleware phan quyen
+create ..abc..middleware and add  use Illuminate\Support\Facades\Auth;  (*)
+use if(Auth::check()) //check if login
+{
+	$user=Auth::user();// get Auth in table wanna check
+	if($user->level == 1) //check level for login
+	return $next($request) //continue (**)
+	else
+		return redirect('...login');
+}
+	else
+		return redirect('...');
+
+4/ check middleware routes
+in Kernel.php, protected $routeMiddleware
+ add '..name..'=> \App\Http\Middleware\..abc..Middleware::class, //middleware created in *
+
+Route::group(['prefix' => '...', 'middleware' => '...abc...'], function () {
+
+
+CREATE in db
+php artisan tinker
+
+factory(App\User::class, 20)->create();
+
+//search
+
+$search = $rq->search;
+    	$tintuc = Tintuc::where('TieuDe','like', '%'.$search.'%')->orWhere('TomTat', 'like', '%'.$search.'%')->orWhere('NoiDung', 'like', '%'.$search.'%')->take(20)->paginate(5);
